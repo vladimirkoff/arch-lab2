@@ -3,25 +3,70 @@ package main
 import (
 	"flag"
 	"fmt"
-	lab2 "github.com/roman-mazur/architecture-lab-2"
+	"io"
+	"os"
+
+	lab2 "github.com/vladimirkoff/arch-lab2"
 )
 
 var (
 	inputExpression = flag.String("e", "", "Expression to compute")
-	// TODO: Add other flags support for input and output configuration.
+	inputFile       = flag.String("f", "", "Input file")
+	outputFile      = flag.String("o", "", "Output file")
 )
 
 func main() {
 	flag.Parse()
 
-	// TODO: Change this to accept input from the command line arguments as described in the task and
-	//       output the results using the ComputeHandler instance.
-	//       handler := &lab2.ComputeHandler{
-	//           Input: {construct io.Reader according the command line parameters},
-	//           Output: {construct io.Writer according the command line parameters},
-	//       }
-	//       err := handler.Compute()
+	input, err := getInputReader()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "input failed:", err)
+		return
+	}
 
-	res, _ := lab2.PrefixToPostfix("+ 2 2")
-	fmt.Println(res)
+	output, err := getOutputWriter()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "output failed:", err)
+		return
+	}
+
+	handler := lab2.ComputeHandler{
+		Input:  input,
+		Output: output,
+	}
+	if err := handler.Compute(); err != nil {
+		fmt.Fprintln(os.Stderr, "computation failed:", err)
+	}
+}
+
+func getInputReader() (io.Reader, error) {
+	if *inputExpression != "" && *inputFile != "" {
+		return nil, fmt.Errorf("exceeded amount of input flags")
+	}
+
+	if *inputExpression != "" {
+		return strings.NewReader(*inputExpression), nil
+	}
+
+	if *inputFile != "" {
+		file, err := os.Open(*inputFile)
+		if err != nil {
+			return nil, fmt.Errorf("input file error: %s", err)
+		}
+		defer file.Close()
+		return file, nil
+	}
+	return nil, fmt.Errorf("no input")
+}
+
+func getOutputWriter() (io.Writer, error) {
+	if *outputFile != "" {
+		file, err := os.Create(*outputFile)
+		if err != nil {
+			return nil, fmt.Errorf("output file error: %s", err)
+		}
+		defer file.Close()
+		return file, nil
+	}
+	return os.Stdout, nil
 }
