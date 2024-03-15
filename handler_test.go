@@ -28,13 +28,13 @@ func TestCompute(t *testing.T) {
 			name:           "Example 2",
 			input:          " ",
 			expectedOutput: "",
-			expectedError:  errors.New("Невірний префіксний вираз"),
+			expectedError:  errors.New("невірний префіксний вираз"),
 		},
 		{
 			name:           "Example 3",
 			input:          "...--- .-.-.- ---...",
 			expectedOutput: "",
-			expectedError:  errors.New("Невірний префіксний вираз"),
+			expectedError:  errors.New("невірний префіксний вираз"),
 		},
 	}
 

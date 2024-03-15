@@ -40,7 +40,7 @@ func TestPrefixToPostfix5(t *testing.T) {
 
 	assert.NotNil(t, err)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("Невірний префіксний вираз"), err)
+		assert.Equal(t, fmt.Errorf("невірний префіксний вираз"), err)
 	}
 }
 func TestPrefixToPostfix6(t *testing.T) {
@@ -48,7 +48,7 @@ func TestPrefixToPostfix6(t *testing.T) {
 
 	assert.NotNil(t, err)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("Невірний префіксний вираз"), err)
+		assert.Equal(t, fmt.Errorf("невірний префіксний вираз"), err)
 	}
 }
 func TestPrefixToPostfix7(t *testing.T) {
@@ -56,7 +56,7 @@ func TestPrefixToPostfix7(t *testing.T) {
 
 	assert.NotNil(t, err)
 	if assert.Error(t, err) {
-		assert.Equal(t, fmt.Errorf("Невірний префіксний вираз"), err)
+		assert.Equal(t, fmt.Errorf("невірний префіксний вираз"), err)
 	}
 }
 

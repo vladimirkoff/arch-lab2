@@ -6,40 +6,45 @@ import (
 	"strings"
 )
 
-// Префікс -> постфікс
+// Конвертація префікс -> постфікс
 func PrefixToPostfix(input string) (string, error) {
-	parts := strings.Fields(input)
+	var parts = strings.Split(input, " ")
 	var arr []string
 
 	for i := len(parts) - 1; i >= 0; i-- {
-		switch {
-		case isStringOperator(parts[i]):
+		if isStringOperator(parts[i]) {
 			if len(arr) < 2 {
-				return "", fmt.Errorf("Невірний префіксний вираз")
+				return "", fmt.Errorf("невірний префіксний вираз")
 			}
-			first := arr[len(arr)-1]
-			second := arr[len(arr)-2]
+
+			var first = arr[len(arr)-1]
+			var second = arr[len(arr)-2]
 			arr = arr[:len(arr)-2]
 
-			result := first + " " + second + " " + parts[i]
-			arr = append(arr, result)
-		case isStringNumber(parts[i]):
+			var res = first + " " + second + " " + parts[i]
+			arr = append(arr, res)
+		} else if isStringNumber(parts[i]) {
 			arr = append(arr, parts[i])
-		default:
-			return "", fmt.Errorf("Невірний префіксний вираз")
+		} else {
+			return "", fmt.Errorf("невірний префіксний вираз")
 		}
 	}
 	return strings.Join(arr, " "), nil
 }
 
+// Перевірка, чи є символ оператором
+func isStringOperator(value string) bool {
+	switch value {
+	case "+", "-", "*", "/":
+		return true
+	default:
+		return false
+	}
+}
+
 // Перевірка, чи є строка числом
-func isStringNumber(s string) bool {
-	_, err := strconv.Atoi(s)
+
+func isStringNumber(value string) bool {
+	_, err := strconv.Atoi(value)
 	return err == nil
 }
-
-// Перевірка, чи є символ оператором
-func isStringOperator(s string) bool {
-	return s == "+" || s == "-" || s == "*" || s == "/"
-}
-

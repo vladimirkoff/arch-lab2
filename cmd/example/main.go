@@ -22,7 +22,7 @@ func main() {
 	var input io.Reader
 
 	if *inputExpression != "" && *inputFile != "" {
-		fmt.Fprintln(os.Stderr, "забагато прапорів")
+		fmt.Fprintln(os.Stderr, "Забагато прапорів")
 	}
 
 	if *inputExpression != "" {
@@ -30,12 +30,12 @@ func main() {
 	} else if *inputFile != "" {
 		file, err := os.Open(*inputFile)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "поилка з файлом результату: "+err.Error())
+			fmt.Fprintln(os.Stderr, "Помилка з файлом результату: "+err.Error())
 		}
 		defer file.Close()
 		input = file
 	} else {
-		fmt.Fprintln(os.Stderr, "помилка з отриманим параметром")
+		fmt.Fprintln(os.Stderr, "Помилка з отриманим параметром")
 		return
 	}
 
@@ -43,7 +43,7 @@ func main() {
 	if *outputFile != "" {
 		file, err := os.Create(*outputFile)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "помилка результату: "+err.Error())
+			fmt.Fprintln(os.Stderr, "Помилка результату: "+err.Error())
 		}
 		defer file.Close()
 		res = file
@@ -58,6 +58,6 @@ func main() {
 
 	err := handler.Compute()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "помилка конвертації: "+err.Error())
+		fmt.Fprintln(os.Stderr, "Помилка конвертації: "+err.Error())
 	}
 }
